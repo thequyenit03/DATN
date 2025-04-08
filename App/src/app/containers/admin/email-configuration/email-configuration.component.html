@@ -1,0 +1,40 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <i nz-icon nzType="home"></i>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    Tài khoản gửi mail
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<form (ngSubmit)="submit()" [formGroup]="formData" nz-form nzLayout="vertical">
+  <div class="mg-t" nz-row>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired>Email</nz-form-label>
+        <nz-form-control nzErrorTip="Không được để trống!">
+          <input formControlName="email" nz-input nzSize="small" type="text"/>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col nzSpan="6">
+      <nz-form-item>
+        <nz-form-label nzRequired>Mật khẩu</nz-form-label>
+        <nz-form-control nzErrorTip="Không được để trống!">
+          <nz-input-group [nzSuffix]="suffixTemplate" nzSize="small">
+            <input [type]="passwordVisible ? 'text' : 'password'" formControlName="password" nz-input/>
+          </nz-input-group>
+          <ng-template #suffixTemplate>
+            <i (click)="passwordVisible = !passwordVisible" [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+               nz-icon></i>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div class="text-center mg-t">
+    <button class="ant-btn ant-btn-primary" type="submit"><span>Lưu lại</span></button>
+  </div>
+</form>
+<ngx-spinner></ngx-spinner>

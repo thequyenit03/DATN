@@ -1,0 +1,68 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <i nz-icon nzType="home"></i>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    Báo cáo theo sản phẩm
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="mg-t" nz-row>
+  <div nz-col nzSpan="8">
+    <nz-form-item>
+      <nz-form-label>Từ khóa tìm kiếm</nz-form-label>
+      <nz-form-control>
+        <input (keyup.enter)="getData()" [(ngModel)]="filter.keySearch" nz-input nzSize="small"
+               placeholder="Tên sản phẩm"
+               type="text"/>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col nzSpan="8">
+    <nz-form-item>
+      <nz-form-label>Ngày đặt hàng</nz-form-label>
+      <nz-form-control>
+        <nz-range-picker [(ngModel)]="filter.rangeDate" [nzFormat]="'dd-MM-yyyy'"
+                         [nzPlaceHolder]="['Từ ngày','Đến ngày']"
+                         class="width-full" nzSize="small" style="max-width: 250px;">
+        </nz-range-picker>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col nzSpan="2">
+    <nz-form-item>
+      <nz-form-control>
+        <button (click)="getData()" nz-button nzSize="small" nzType="primary">Tìm kiếm</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="mg-t" nz-col nzSpan="24">
+    <nz-table #tblData [nzShowTotal]="showTotalTpl" [nzData]="datas" [nzPageSize]="100"
+              [nzScroll]="{y:'calc(100vh - 280px)'}">
+      <thead>
+      <tr>
+        <th nzWidth="80px">Hình ảnh</th>
+        <th>Tên sản phẩm</th>
+        <th nzWidth="120px">Số lượng bán</th>
+        <th nzWidth="120px">Doanh thu</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of tblData.data">
+        <td nzAlign="center">
+          <img [src]="data.image | fullPathResource" alt="" class="img-product">
+        </td>
+        <td>{{ data.name }}</td>
+        <td class="text-right">{{ data.totalQty | number }}</td>
+        <td class="text-right">{{ data.totalAmount | number }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #showTotalTpl let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} of {{ total | number }} bản ghi
+    </ng-template>
+  </div>
+</div>
+
+<ngx-spinner></ngx-spinner>

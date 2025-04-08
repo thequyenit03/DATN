@@ -1,0 +1,84 @@
+<nz-layout>
+  <nz-sider [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" nzCollapsible>
+    <div class="logo">
+      <img *ngIf="!isCollapsed" alt="" style="height: 100%;" src="./assets/imgs/logo.png">
+      <img *ngIf="isCollapsed" alt="" style="height: 100%;" src="./assets/imgs/favicon_white.png">
+    </div>
+    <ul class="menu-left" nz-menu nzMode="inline" nzTheme="dark">
+      <li (click)="navigate('/admin')" nz-menu-item>
+        <i nz-icon nzType="dashboard"></i>
+        <span> Tổng quan </span>
+      </li>
+      <li nz-submenu nzIcon="shopping-cart" nzOpen nzTitle="Đơn hàng">
+        <ul>
+          <li (click)="navigate('/admin/don-hang/don-hang-can-xu-ly')" nz-menu-item>Đơn hàng cần xử lý
+          </li>
+          <li (click)="navigate('/admin/don-hang')" nz-menu-item>Danh sách đơn hàng</li>
+        </ul>
+      </li>
+      <li nz-submenu nzIcon="appstore" nzOpen nzTitle="Sản phẩm">
+        <ul>
+          <li (click)="navigate('/admin/san-pham')" nz-menu-item>Danh sách sản phẩm</li>
+          <li (click)="navigate('/admin/thuoc-tinh-san-pham')" nz-menu-item>Thuộc tính sản phẩm</li>
+        </ul>
+      </li>
+      <li (click)="navigate('/admin/danh-gia')" nz-menu-item>
+        <i nz-icon nzType="form"></i>
+        <span> Đánh giá sản phẩm</span>
+      </li>
+      <li (click)="navigate('/admin/khach-hang')" nz-menu-item>
+        <i nz-icon nzType="user"></i>
+        <span> Khách hàng</span>
+      </li>
+      <li (click)="navigate('/admin/nha-cung-cap')" nz-menu-item>
+        <i nz-icon nzType="user"></i>
+        <span> Nhà cung cấp</span>
+      </li>
+      <li (click)="navigate('/admin/bai-viet')" nz-menu-item>
+        <i nz-icon nzType="file-text"></i>
+        <span> Quản lý bài viết</span>
+      </li>
+      <li (click)="navigate('/admin/email-dang-ky-nhan-tin')" nz-menu-item>
+        <i nz-icon nzType="mail"></i>
+        <span> Email đăng ký nhận tin</span>
+      </li>
+      <li nz-submenu nzIcon="bar-chart" nzTitle="Báo cáo thống kê">
+        <ul>
+          <li (click)="navigate('/admin/thong-ke-don-hang')" nz-menu-item>Thống kê đơn hàng</li>
+          <li (click)="navigate('/admin/bao-cao-theo-san-pham')" nz-menu-item>Báo cáo theo sản phẩm</li>
+          <li (click)="navigate('/admin/bao-cao-doanh-thu')" nz-menu-item>Báo cáo doanh thu</li>
+        </ul>
+      </li>
+      <li nz-submenu nzIcon="global" nzTitle="Website">
+        <ul>
+          <li (click)="navigate('/admin/website')" nz-menu-item>Thông tin Website</li>
+          <li (click)="navigate('/admin/menu-chinh')" nz-menu-item>Menu chính</li>
+          <li (click)="navigate('/admin/menu-phu')" nz-menu-item>Menu phụ (footer)</li>
+          <li (click)="navigate('/admin/banner')" nz-menu-item>Banner</li>
+        </ul>
+      </li>
+      <li nz-submenu nzIcon="setting" nzTitle="Cấu hình">
+        <ul>
+          <li (click)="navigate('/admin/email-template')" nz-menu-item>Mẫu email</li>
+          <li (click)="navigate('/admin/email-config')" nz-menu-item>Tài khoản gửi mail</li>
+          <li (click)="navigate('/admin/tai-khoan-quan-tri')" nz-menu-item>Tài khoản quản trị</li>
+        </ul>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <i (click)="isCollapsed = !isCollapsed" [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" class="trigger"
+         nz-icon></i>
+      <ul nz-menu nzMode="horizontal" nzTheme="dark">
+        <li (nzOnConfirm)="logout()" nz-menu-item nz-popconfirm nzPopconfirmPlacement="topRight"
+            nzPopconfirmTitle="Đăng xuất">
+          <i nz-icon nzType="logout"></i>
+        </li>
+      </ul>
+    </nz-header>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

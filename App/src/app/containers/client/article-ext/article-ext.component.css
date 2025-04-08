@@ -1,0 +1,12 @@
+img {
+  max-width: 100%;
+}
+.banner{
+  height: 40vh;
+}
+
+.banner img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}

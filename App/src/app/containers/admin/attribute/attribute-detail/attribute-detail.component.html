@@ -1,0 +1,22 @@
+<nz-drawer (nzOnClose)="close()" [nzBodyStyle]="{ overflow: 'auto' }" [nzFooter]="footerTpl" [nzMaskClosable]="false"
+           [nzTitle]="isAddNew?'Thêm mới':'Thông tin chi tiết'" [nzVisible]="visible" [nzWidth]="320">
+  <form (ngSubmit)="submit()" *nzDrawerContent [formGroup]="formData" nz-form nzLayout="vertical">
+    <div nz-row>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired>Tên thuộc tính</nz-form-label>
+          <nz-form-control nzErrorTip="Không được để trống!">
+            <input formControlName="name" nz-input nzSize="small" type="text"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <ng-template #footerTpl>
+    <div style="float: right">
+      <button (click)="close()" nz-button>Hủy</button>
+      <button (click)="submit()" nz-button nzType="primary">Lưu lại</button>
+    </div>
+  </ng-template>
+
+</nz-drawer>

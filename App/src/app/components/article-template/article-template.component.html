@@ -1,0 +1,10 @@
+<div *ngIf="article" class="box-article">
+  <div class="article-image">
+    <img [src]="article.image | fullPathResource" alt=""/>
+  </div>
+  <div class="article-title text-center">
+    <a routerLink="/bai-viet/{{article.alias}}">
+      {{ article.title }}
+    </a>
+  </div>
+</div>

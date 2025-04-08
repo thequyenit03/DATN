@@ -1,0 +1,127 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <i nz-icon nzType="home"></i>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item> Quản lý đánh giá sản phẩm</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="mg-t" nz-row>
+  <div nz-col nzSpan="10">
+    <nz-form-item>
+      <nz-form-label>Từ khóa tìm kiếm</nz-form-label>
+      <nz-form-control>
+        <input
+          (keyup.enter)="getData()"
+          [(ngModel)]="filter.keySearch"
+          nz-input
+          nzSize="small"
+          placeholder="Tên sản phẩm, nội dung đánh giá, người đánh giá"
+          type="text"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col nzSpan="6">
+    <nz-form-item>
+      <nz-form-label>Trạng thái</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          [(ngModel)]="filter.status"
+          class="width-full"
+          nzAllowClear
+          nzPlaceHolder="Tất cả"
+          nzSize="small"
+        >
+          <nz-option [nzValue]="10" nzLabel="Chờ duyệt"></nz-option>
+          <nz-option [nzValue]="20" nzLabel="Đã duyệt"></nz-option>
+          <nz-option
+            [nzValue]="30"
+            nzLabel="Cập nhật lại - Chờ duyệt"
+          ></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col nzSpan="8">
+    <nz-form-item>
+      <nz-form-control>
+        <button (click)="getData()" nz-button nzSize="small" nzType="primary">
+          <i nz-icon nzTheme="outline" nzType="search"></i>
+          Tìm kiếm
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="mg-t" nz-col nzSpan="24">
+    <nz-table #tblData [nzShowTotal]="showTotalTpl" [nzData]="datas" [nzPageSize]="100"
+              [nzScroll]="{x:'1200px',y:'calc(100vh - 280px)'}">
+      <thead>
+      <tr>
+        <th nzWidth="80px">Hình ảnh</th>
+        <th nzWidth="300px">Tên sản phẩm</th>
+        <th nzAlign="center" nzWidth="50px">Rate</th>
+        <th nzWidth="150px">Ngày đánh giá</th>
+        <th nzWidth="150px">Người đánh giá</th>
+        <th nzWidth="300px">Nội dung</th>
+        <th nzAlign="center" nzWidth="200px">Trạng thái</th>
+        <th nzRight nzWidth="120px"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of tblData.data">
+        <td nzAlign="center">
+          <img
+            [src]="data.product?.image ?? '' | fullPathResource"
+            alt=""
+            class="img-product"
+          />
+        </td>
+        <td>
+          <a href="/san-pham/{{ data.product?.alias }}" target="_blank">
+            {{ data.product?.name }}
+          </a>
+        </td>
+        <td nzAlign="center">{{ data.star }}</td>
+        <td class="text-center no-wrap">
+          {{ data.created | date : "HH:mm dd-MM-yyyy" }}
+        </td>
+        <td>{{ data.createdBy }}</td>
+        <td>{{ data.content }}</td>
+        <td>
+            <span [ngSwitch]="data.status">
+              <span *ngSwitchCase="10">
+                <nz-badge nzStatus="warning" nzText="Chờ duyệt"></nz-badge>
+              </span>
+              <span *ngSwitchCase="20">
+                <nz-badge nzStatus="success" nzText="Đã duyệt"></nz-badge>
+              </span>
+              <span *ngSwitchCase="30">
+                <nz-badge
+                  nzStatus="warning"
+                  nzText="Cập nhật lại - Chờ duyệt"
+                ></nz-badge>
+              </span>
+            </span>
+        </td>
+        <td nzRight>
+          <button
+            (click)="showDetail(data)"
+            class="mg-r"
+            nz-button
+            nzSize="small"
+          >
+            Xem chi tiết
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #showTotalTpl let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} of {{ total | number }} bản ghi
+    </ng-template>
+  </div>
+</div>
+
+<app-review-detail #frmDetail (onSubmit)="onSubmit($event)"></app-review-detail>
+<ngx-spinner></ngx-spinner>

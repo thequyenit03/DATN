@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\CacKi\\DATN\\TestCode\\SourceCode\\Service\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D9D2ACF6-3C9C-42D0-B2B5-566473549212}|Service.csproj|d:\\cacki\\datn\\testcode\\sourcecode\\service\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D9D2ACF6-3C9C-42D0-B2B5-566473549212}|Service.csproj|solutionrelative:properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9D2ACF6-3C9C-42D0-B2B5-566473549212}|Service.csproj|d:\\cacki\\datn\\testcode\\sourcecode\\service\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{D9D2ACF6-3C9C-42D0-B2B5-566473549212}|Service.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9D2ACF6-3C9C-42D0-B2B5-566473549212}|Service.csproj|d:\\cacki\\datn\\testcode\\sourcecode\\service\\.editorconfig||{68B46364-D378-42F2-9E72-37D86C5F4468}",
+      "RelativeMoniker": "D:0:0:{D9D2ACF6-3C9C-42D0-B2B5-566473549212}|Service.csproj|solutionrelative:.editorconfig||{68B46364-D378-42F2-9E72-37D86C5F4468}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9D2ACF6-3C9C-42D0-B2B5-566473549212}|Service.csproj|d:\\cacki\\datn\\testcode\\sourcecode\\service\\util\\datahelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9D2ACF6-3C9C-42D0-B2B5-566473549212}|Service.csproj|solutionrelative:util\\datahelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9D2ACF6-3C9C-42D0-B2B5-566473549212}|Service.csproj|d:\\cacki\\datn\\testcode\\sourcecode\\service\\util\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9D2ACF6-3C9C-42D0-B2B5-566473549212}|Service.csproj|solutionrelative:util\\constants.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "D:\\CacKi\\DATN\\TestCode\\SourceCode\\Service\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Properties\\launchSettings.json",
+              "ToolTip": "D:\\CacKi\\DATN\\TestCode\\SourceCode\\Service\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-08T03:10:42.852Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\CacKi\\DATN\\TestCode\\SourceCode\\Service\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\CacKi\\DATN\\TestCode\\SourceCode\\Service\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-08T03:10:37.385Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": ".editorconfig",
+              "DocumentMoniker": "D:\\CacKi\\DATN\\TestCode\\SourceCode\\Service\\.editorconfig",
+              "RelativeDocumentMoniker": ".editorconfig",
+              "ToolTip": "D:\\CacKi\\DATN\\TestCode\\SourceCode\\Service\\.editorconfig",
+              "RelativeToolTip": ".editorconfig",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-04-08T03:10:36.405Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Constants.cs",
+              "DocumentMoniker": "D:\\CacKi\\DATN\\TestCode\\SourceCode\\Service\\Util\\Constants.cs",
+              "RelativeDocumentMoniker": "Util\\Constants.cs",
+              "ToolTip": "D:\\CacKi\\DATN\\TestCode\\SourceCode\\Service\\Util\\Constants.cs",
+              "RelativeToolTip": "Util\\Constants.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAwwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T03:10:29.775Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DataHelper.cs",
+              "DocumentMoniker": "D:\\CacKi\\DATN\\TestCode\\SourceCode\\Service\\Util\\DataHelper.cs",
+              "RelativeDocumentMoniker": "Util\\DataHelper.cs",
+              "ToolTip": "D:\\CacKi\\DATN\\TestCode\\SourceCode\\Service\\Util\\DataHelper.cs",
+              "RelativeToolTip": "Util\\DataHelper.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-08T03:10:26.682Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 150,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

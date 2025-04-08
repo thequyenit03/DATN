@@ -1,0 +1,35 @@
+<div *ngIf="product">
+  <nz-card [nzCover]="coverTemplate" nzHoverable>
+    <div>
+      <div class="product-name">
+        <a routerLink="/san-pham/{{product.alias}}">
+          {{ product.name }}
+        </a>
+      </div>
+      <div class="product-price">
+        <div class="product-unit-price">
+          {{ product.price | number }} ₫
+        </div>
+        <div class="product-price-discount">
+          {{ product.discountPrice | number }} ₫
+        </div>
+      </div>
+      <div (click)="addToCart()" class="product-add-cart">
+                <span>
+                    Thêm vào giỏ
+                </span>
+      </div>
+      <div (click)="toggleWishlist()" class="product-add-wishlist">
+        <span *ngIf="!product.isWishlist" nz-icon nzTheme="outline" nzType="heart"></span>
+        <span *ngIf="product.isWishlist" class="active" nz-icon nzTheme="fill" nzType="heart"></span>
+      </div>
+    </div>
+  </nz-card>
+  <ng-template #coverTemplate>
+    <div class="box-product-image">
+      <a routerLink="/san-pham/{{product.alias}}">
+        <img [src]="product.image | fullPathResource" alt=""/>
+      </a>
+    </div>
+  </ng-template>
+</div>

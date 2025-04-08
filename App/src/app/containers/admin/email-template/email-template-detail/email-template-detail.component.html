@@ -1,0 +1,56 @@
+<nz-drawer (nzOnClose)="close()" [nzBodyStyle]="{ overflow: 'auto' }" [nzFooter]="footerTpl" [nzMaskClosable]="false"
+           [nzVisible]="visible" [nzWidth]="'90%'" nzTitle="Thông tin chi tiết">
+  <form (ngSubmit)="submit()" *nzDrawerContent [formGroup]="formData" nz-form nzLayout="vertical">
+    <div nz-row>
+      <div nz-col nzSpan="8">
+        <nz-form-item>
+          <nz-form-label>Mẫu gửi Mail</nz-form-label>
+          <nz-form-control>
+            <input formControlName="type" nz-input nzSize="small" type="text"/>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired>Subject</nz-form-label>
+          <nz-form-control nzErrorTip="Không được để trống!">
+            <textarea formControlName="subject" nz-input nzSize="small" rows="2" type="text"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>CC</nz-form-label>
+          <nz-form-control>
+            <textarea formControlName="cc" nz-input nzSize="small" rows="2" type="text"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>BCC</nz-form-label>
+          <nz-form-control>
+            <textarea formControlName="bcc" nz-input nzSize="small" rows="2" type="text"></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="16">
+        <nz-form-item>
+          <nz-form-label>Key</nz-form-label>
+          <nz-form-control>
+            <div [innerHTML]="formData.controls['keyGuide'].value">
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>Nội dung</nz-form-label>
+          <nz-form-control>
+            <angular-editor [config]="config" formControlName="content"></angular-editor>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+
+  <ng-template #footerTpl>
+    <div style="float: right">
+      <button (click)="close()" nz-button>Hủy</button>
+      <button (click)="submit()" nz-button nzType="primary">Lưu lại</button>
+    </div>
+  </ng-template>
+
+</nz-drawer>

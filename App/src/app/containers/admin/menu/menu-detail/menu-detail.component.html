@@ -1,0 +1,75 @@
+<nz-drawer (nzOnClose)="close()" [nzBodyStyle]="{ overflow: 'auto' }" [nzFooter]="footerTpl" [nzMaskClosable]="false"
+           [nzTitle]="isAddNew?'Thêm mới':'Thông tin chi tiết'" [nzVisible]="visible" [nzWidth]="720">
+  <form (ngSubmit)="submit()" *nzDrawerContent [formGroup]="formData" nz-form nzLayout="vertical">
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label>Danh mục cha</nz-form-label>
+          <nz-form-control>
+            <nz-select class="width-full" formControlName="parentMenu" nzAllowClear nzPlaceHolder="------"
+                       nzSize="small">
+              <nz-option *ngFor="let item of parentMenus" [nzLabel]="item.name" [nzValue]="item.id">
+              </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="4">
+        <nz-form-item>
+          <nz-form-label>Thứ tự hiển thị</nz-form-label>
+          <nz-form-control>
+            <nz-input-number [nzMin]="1" [nzStep]="1" formControlName="index" nzSize="small">
+            </nz-input-number>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="4">
+        <nz-form-item>
+          <nz-form-label>Active</nz-form-label>
+          <nz-form-control>
+            <label formControlName="active" nz-checkbox></label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="4">
+        <nz-form-item>
+          <nz-form-label>Hiển thị trang chủ</nz-form-label>
+          <nz-form-control>
+            <label formControlName="showHomePage" nz-checkbox></label>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row>
+      <div nz-col nzSpan="12">
+        <nz-form-item>
+          <nz-form-label nzRequired>Loại menu</nz-form-label>
+          <nz-form-control nzErrorTip="Không được để trống!">
+            <nz-select class="width-full" formControlName="type" nzSize="small">
+              <nz-option nzLabel="Danh mục sản phẩm" nzValue="san-pham"></nz-option>
+              <nz-option nzLabel="Danh mục bài viết" nzValue="bai-viet"></nz-option>
+              <nz-option nzLabel="Bài viết" nzValue="chi-tiet-bai-viet"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzSpan="24">
+        <nz-form-item>
+          <nz-form-label nzRequired>Tên menu</nz-form-label>
+          <nz-form-control nzErrorTip="Không được để trống!">
+            <input formControlName="name" nz-input nzSize="small"
+                   type="text"/>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+
+  <ng-template #footerTpl>
+    <div style="float: right">
+      <button (click)="close()" nz-button>Hủy</button>
+      <button (click)="submit()" nz-button nzType="primary">Lưu lại</button>
+    </div>
+  </ng-template>
+
+</nz-drawer>

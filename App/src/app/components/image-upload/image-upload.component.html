@@ -1,0 +1,15 @@
+<div>
+  <button (click)="chooseFile()" class="mg-b pull-right" nz-button nzSize="small" nzType="primary" type="button">
+    <span nz-icon nzTheme="outline" nzType="upload"></span>
+    Tải ảnh
+  </button>
+  <button (click)="clearImage()" *ngIf="base64Image" type="button" nz-button nzType="primary" nzDanger nzSize="small" class="mg-b mg-l">
+    <nz-icon nzType="delete" nzTheme="outline"/>
+    Xóa ảnh
+  </button>
+</div>
+<div>
+  <img [src]="base64Image" class="image-upload-img" alt=""/>
+</div>
+<input #inpFile (change)="fileChangeEvent($event)" accept=".jpg, .png, .jpeg, .gif, .bmp|image/*" style="display: none"
+       type="file"/>

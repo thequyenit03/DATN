@@ -1,0 +1,147 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <i nz-icon nzType="home"></i>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item> Danh sách sản phẩm</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="mg-t" nz-row>
+  <div nz-col nzSpan="10">
+    <nz-form-item>
+      <nz-form-label>Từ khóa tìm kiếm</nz-form-label>
+      <nz-form-control>
+        <input
+          (keyup.enter)="getData()"
+          [(ngModel)]="filter.keySearch"
+          nz-input
+          nzSize="small"
+          placeholder="Tên sản phẩm"
+          type="text"
+        />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col nzSpan="8">
+    <nz-form-item>
+      <nz-form-label>Danh mục sản phẩm</nz-form-label>
+      <nz-form-control>
+        <nz-select
+          [(ngModel)]="filter.menuId"
+          class="width-full"
+          nzAllowClear
+          nzPlaceHolder="Tất cả"
+          nzSize="small"
+        >
+          <nz-option
+            *ngFor="let item of menus"
+            [nzLabel]="
+              item.parentMenu == null ? item.name : ' &emsp;__' + item.name
+            "
+            [nzValue]="item.id"
+          >
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col nzSpan="6">
+    <nz-form-item>
+      <nz-form-control>
+        <button (click)="getData()" nz-button nzSize="small" nzType="primary">
+          <i nz-icon nzTheme="outline" nzType="search"></i>
+          Tìm kiếm
+        </button>
+        <button (click)="addNew()" nz-button nzSize="small" nzType="primary">
+          <i nz-icon nzTheme="outline" nzType="plus"></i>
+          Thêm mới
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="mg-t" nz-col nzSpan="24">
+    <nz-table #tblData [nzShowTotal]="showTotalTpl" [nzData]="datas" [nzPageSize]="100"
+              [nzScroll]="{x:'1200px',y:'calc(100vh - 280px)'}">
+      <thead>
+      <tr>
+        <th nzWidth="80px">Hình ảnh</th>
+        <th nzWidth="250px">Tên sản phẩm</th>
+        <th nzWidth="180px">Danh mục</th>
+        <th nzWidth="150px">Nhà cung cấp</th>
+        <th nzAlign="center" nzWidth="100px">Giá niêm yết</th>
+        <th nzAlign="center" nzWidth="100px">Giá bán</th>
+        <th nzAlign="center" nzWidth="90px">Số lượng</th>
+        <th nzAlign="center" nzWidth="100px">Sản phẩm nổi bật</th>
+        <th nzAlign="center" nzWidth="120px">Trạng thái</th>
+        <th nzAlign="center" nzWidth="80px">Thứ tự hiển thị</th>
+        <th nzRight nzWidth="180px"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of tblData.data">
+        <td nzAlign="center">
+          <img
+            [src]="data.image | fullPathResource"
+            alt=""
+            class="img-product"
+          />
+        </td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.menuName }}</td>
+        <td>{{ data.providerName }}</td>
+        <td nzAlign="center">{{ data.price | number }}</td>
+        <td nzAlign="center">{{ data.discountPrice | number }}</td>
+        <td nzAlign="center">{{ data.qty | number }}</td>
+        <td nzAlign="center">
+          <nz-switch [(ngModel)]="data.selling" disabled nzSize="small"></nz-switch>
+        </td>
+        <td nzAlign="center">
+            <span [ngSwitch]="data.status">
+              <span *ngSwitchCase="10">
+                <nz-badge nzStatus="success" nzText="Đang bán"></nz-badge>
+              </span>
+              <span *ngSwitchCase="20">
+                <nz-badge nzStatus="error" nzText="Dừng bán"></nz-badge>
+              </span>
+              <span *ngSwitchCase="30">
+                <nz-badge nzStatus="warning" nzText="Hết hàng"></nz-badge>
+              </span>
+            </span>
+        </td>
+        <td nzAlign="center">{{ data.index }}</td>
+        <td nzRight>
+          <button
+            (click)="showDetail(data)"
+            class="mg-r"
+            nz-button
+            nzSize="small"
+          >
+            Xem chi tiết
+          </button>
+          <button
+            (nzOnConfirm)="delete(data)"
+            nz-button
+            nz-popconfirm
+            nzDanger
+            nzPopconfirmPlacement="topRight"
+            nzPopconfirmTitle="Xác nhận xóa?"
+            nzSize="small"
+            nzType="primary"
+          >
+            Xóa
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #showTotalTpl let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} of {{ total | number }} bản ghi
+    </ng-template>
+  </div>
+</div>
+
+<app-product-detail
+  #frmDetail
+  (onSubmit)="onSubmit($event)"
+></app-product-detail>
+<ngx-spinner></ngx-spinner>

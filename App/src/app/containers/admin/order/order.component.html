@@ -1,0 +1,91 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <i nz-icon nzType="home"></i>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    Danh sách đơn hàng
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="mg-t" nz-row>
+  <div nz-col nzSpan="8">
+    <nz-form-item>
+      <nz-form-label>Từ khóa tìm kiếm</nz-form-label>
+      <nz-form-control>
+        <input (keyup.enter)="getData()" [(ngModel)]="filter.keySearch" nz-input nzSize="small"
+               placeholder="Mã đơn hàng, tên KH"
+               type="text"/>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col nzSpan="8">
+    <nz-form-item>
+      <nz-form-label>Ngày đặt hàng</nz-form-label>
+      <nz-form-control>
+        <nz-range-picker [(ngModel)]="filter.rangeDate" [nzFormat]="'dd-MM-yyyy'"
+                         [nzPlaceHolder]="['Từ ngày','Đến ngày']"
+                         class="width-full" nzSize="small" style="max-width: 250px;">
+        </nz-range-picker>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col nzSpan="6">
+    <nz-form-item>
+      <nz-form-label>Trạng thái đơn hàng</nz-form-label>
+      <nz-form-control>
+        <nz-select [(ngModel)]="filter.status" class="width-full" nzAllowClear nzPlaceHolder="Tất cả"
+                   nzSize="small">
+          <nz-option nzLabel="Chờ xác nhận" nzValue="10"></nz-option>
+          <nz-option nzLabel="Đã xác nhận" nzValue="20"></nz-option>
+          <nz-option nzLabel="Đang vận chuyển" nzValue="30"></nz-option>
+          <nz-option nzLabel="Đã giao" nzValue="40"></nz-option>
+          <nz-option nzLabel="Đã hủy" nzValue="50"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col nzSpan="2">
+    <nz-form-item>
+      <nz-form-control>
+        <button (click)="getData()" nz-button nzSize="small" nzType="primary">Tìm kiếm</button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="mg-t" nz-col nzSpan="24">
+    <nz-table #tblData [nzShowTotal]="showTotalTpl" [nzData]="datas" [nzPageSize]="100">
+      <thead>
+      <tr>
+        <th class="no-wrap">Mã đơn hàng</th>
+        <th>Ngày đặt hàng</th>
+        <th>Tên khách hàng</th>
+        <th class="no-wrap">Số điện thoại</th>
+        <th>Địa chỉ liên hệ</th>
+        <th>Tổng tiền</th>
+        <th>Trạng thái</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of tblData.data">
+        <td>{{ data.id }}</td>
+        <td class="no-wrap"> {{ data.created | date:'HH:mm dd-MM-yyyy' }}</td>
+        <td class="no-wrap">{{ data.customer.fullName }}</td>
+        <td class="no-wrap">{{ data.phoneNumber }}</td>
+        <td>{{ data.address }}</td>
+        <td class="text-right no-wrap">{{ data.totalAmount | number }}</td>
+        <td>{{ data.status | orderStatus }}</td>
+        <td class="no-wrap">
+          <a (click)="showOrderDetail(data)">Xem chi tiết</a>
+        </td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #showTotalTpl let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} of {{ total | number }} bản ghi
+    </ng-template>
+  </div>
+</div>
+
+<app-order-detail #frmDetail (onChangeStatus)="onChangeStatus($event)"></app-order-detail>
+<ngx-spinner></ngx-spinner>

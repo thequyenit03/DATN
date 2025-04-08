@@ -1,0 +1,53 @@
+<nz-breadcrumb>
+  <nz-breadcrumb-item>
+    <i nz-icon nzType="home"></i>
+  </nz-breadcrumb-item>
+  <nz-breadcrumb-item>
+    Danh sách Email đăng ký nhận tin
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div class="mg-t" nz-row>
+  <div nz-col nzSpan="10">
+    <nz-form-item>
+      <nz-form-label>Từ khóa tìm kiếm</nz-form-label>
+      <nz-form-control>
+        <input (keyup.enter)="getData()" [(ngModel)]="filter.keySearch" nz-input nzSize="small" placeholder="Email"
+               type="text"/>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div nz-col nzSpan="6">
+    <nz-form-item>
+      <nz-form-control>
+        <button (click)="getData()" nz-button nzSize="small" nzType="primary">
+          <i nz-icon nzTheme="outline" nzType="search"></i>
+          Tìm kiếm
+        </button>
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+
+  <div class="mg-t" nz-col nzSpan="24">
+    <nz-table #tblData [nzShowTotal]="showTotalTpl" [nzData]="datas" [nzPageSize]="100"
+              [nzScroll]="{y:'calc(100vh - 280px)'}">
+      <thead>
+      <tr>
+        <th>Email</th>
+        <th nzWidth="160px">Ngày đăng ký</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of tblData.data">
+        <td>{{ data.email }}</td>
+        <td>{{ data.created | date:'HH:mm dd-MM-yyyy' }}</td>
+      </tr>
+      </tbody>
+    </nz-table>
+    <ng-template #showTotalTpl let-range="range" let-total>
+      {{ range[0] }}-{{ range[1] }} of {{ total | number }} bản ghi
+    </ng-template>
+  </div>
+</div>
+
+<ngx-spinner></ngx-spinner>

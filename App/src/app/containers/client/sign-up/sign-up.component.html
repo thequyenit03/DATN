@@ -1,0 +1,130 @@
+<div>
+  <div class="box-auth" style="max-width: 700px;">
+    <div>
+      <h4>Đăng ký tài khoản</h4>
+    </div>
+    <div>
+      <nz-steps [nzCurrent]="currentStep">
+        <nz-step nzTitle="Đăng ký"></nz-step>
+        <nz-step nzTitle="Xác minh Email"></nz-step>
+        <nz-step nzTitle="Hoàn tất thông tin"></nz-step>
+      </nz-steps>
+      <div class="mg-t-md">
+        <ng-container [ngSwitch]="currentStep">
+          <div *ngSwitchCase="0">
+            <div nz-row>
+              <div nz-col nzOffset="6" nzSpan="12">
+                <form (ngSubmit)="requestOTP()" [formGroup]="formMail" class="login-form" nz-form>
+                  <div class="mg-b">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Không được để trống!">
+                        <nz-input-group nzPrefixIcon="mail">
+                          <input formControlName="email" nz-input placeholder="Email"
+                                 type="text"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div class="text-center mg-b">
+                    <button [nzLoading]="nzLoading" nz-button nzType="primary" type="submit">
+                      Tiếp theo
+                    </button>
+                  </div>
+                  <div>
+                    <a routerLink="/dang-nhap">
+                      <i nz-icon nzTheme="outline" nzType="left"></i>
+                      Quay lại đăng nhập
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div *ngSwitchCase="1">
+            <div nz-row>
+              <div nz-col nzOffset="6" nzSpan="12">
+                <form (ngSubmit)="confirmOTP()" [formGroup]="formOTP" class="login-form" nz-form>
+                  <div class="mg-b">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Không được để trống!">
+                        <nz-input-group nzPrefixIcon="key">
+                          <input formControlName="oTP" nz-input placeholder="Mã OTP"
+                                 type="text"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div class="text-center">
+                    <button [nzLoading]="nzLoading" nz-button nzType="primary" type="submit">Xác
+                      thực
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div *ngSwitchCase="2">
+            <div nz-row>
+              <div nz-col nzOffset="6" nzSpan="12">
+                <form (ngSubmit)="onSubmit()" [formGroup]="formData" class="login-form" nz-form>
+                  <div class="mg-b">
+                    <nz-form-item>
+                      <nz-form-control>
+                        <nz-input-group nzPrefixIcon="mail">
+                          <input formControlName="email" nz-input placeholder="Email"
+                                 type="text"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div class="mg-b">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Không được để trống!">
+                        <nz-input-group nzPrefixIcon="user">
+                          <input formControlName="fullName" nz-input placeholder="Họ tên"
+                                 type="text"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div class="mg-b">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Không được để trống!">
+                        <nz-input-group nzPrefixIcon="lock">
+                          <input formControlName="password" nz-input placeholder="Mật khẩu"
+                                 type="password"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div class="mg-b">
+                    <nz-form-item>
+                      <nz-form-control nzErrorTip="Không được để trống!">
+                        <nz-input-group nzPrefixIcon="phone">
+                          <input formControlName="phoneNumber" nz-input placeholder="Số điện thoại"
+                                 type="text"/>
+                        </nz-input-group>
+                      </nz-form-control>
+                    </nz-form-item>
+                  </div>
+                  <div class="text-center mg-b">
+                    <button [nzLoading]="nzLoading" nz-button nzType="primary" type="submit">
+                      Đăng ký
+                    </button>
+                  </div>
+                  <div>
+                    <a routerLink="/dang-nhap">
+                      <i nz-icon nzTheme="outline" nzType="left"></i>
+                      Quay lại đăng nhập
+                    </a>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+</div>

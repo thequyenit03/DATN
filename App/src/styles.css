@@ -1,0 +1,11 @@
+.ant-input-affix-wrapper {
+  color: rgb(193 193 193 / 85%);
+}
+
+nz-range-picker, nz-select {
+  width: 100%;
+}
+
+.ant-table-measure-now {
+  display: none;
+}

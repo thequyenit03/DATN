@@ -1,0 +1,61 @@
+<div class="body-auth">
+  <div class="box-auth">
+    <div>
+      <h3>Đăng nhập trang quản trị</h3>
+    </div>
+    <form
+      (ngSubmit)="onSubmit()"
+      [formGroup]="formData"
+      class="login-form"
+      nz-form
+    >
+      <div class="mg-b">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Không được để trống!">
+            <nz-input-group nzPrefixIcon="user">
+              <input
+                formControlName="userName"
+                nz-input
+                placeholder="Tên tài khoản"
+                type="text"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="mg-b">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Không được để trống!">
+            <nz-input-group nzPrefixIcon="lock" [nzSuffix]="iconPassword">
+              <input
+                formControlName="password"
+                nz-input
+                placeholder="Mật khẩu"
+                [type]="isShowPassword ? 'text' : 'password'"
+              />
+            </nz-input-group>
+          </nz-form-control>
+
+          <ng-template #iconPassword>
+            <nz-icon
+              style="cursor: pointer"
+              (click)="isShowPassword = !isShowPassword"
+              [nzType]="isShowPassword ? 'eye-invisible' : 'eye'"
+              nzTheme="outline"
+            />
+          </ng-template>
+        </nz-form-item>
+      </div>
+      <div>
+        <button
+          [nzType]="'primary'"
+          class="login-form-button login-form-margin"
+          nz-button
+          type="submit"
+        >
+          Đăng nhập
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

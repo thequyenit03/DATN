@@ -1,0 +1,167 @@
+<div *ngIf="product" class="container">
+  <div class="box-breadcrumb">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>
+        <a routerLink="/">Trang chủ</a>
+      </nz-breadcrumb-item>
+      <nz-breadcrumb-item>
+        {{ product.name }}
+      </nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+  <div>
+    <div nz-row>
+      <div nz-col nzMd="8" nzSm="24">
+        <img
+          [src]="product.image | fullPathResource"
+          class="thumbnail"
+          alt=""
+        />
+        <div class="box-product-detail-carousel mg-t">
+          <owl-carousel-o [options]="customOptions">
+            <ng-container *ngFor="let productImage of product.productImages">
+              <ng-template carouselSlide>
+                <div
+                  (click)="showImg(productImage.image)"
+                  class="carousel-cell"
+                >
+                  <img
+                    [src]="productImage.image | fullPathResource"
+                    class="thumbnail"
+                    alt=""/>
+                </div>
+              </ng-template>
+            </ng-container>
+          </owl-carousel-o>
+        </div>
+      </div>
+      <div nz-col nzMd="16" nzSm="24">
+        <div class="box-product-detail">
+          <div class="product-detail-name">
+            <span>{{ product.name }}</span>
+          </div>
+          <div class="product-detail-rate">
+            <nz-rate [ngModel]="product.rateAvg" nzDisabled></nz-rate>
+            <span>{{ product.rateAvg }}</span>
+          </div>
+          <div>
+            <span class="product-detail-price"
+            >{{ product.price | number }} ₫</span
+            >
+            <span class="product-detail-price-discount"
+            >{{ product.discountPrice | number }} ₫</span
+            >
+          </div>
+          <div class="product-detail-short-desc">
+            <div [innerHTML]="product.shortDescription"></div>
+          </div>
+          <div class="product-detail-attribute">
+            <div>
+              <table class="table-product-attribute">
+                <tbody>
+                <tr *ngFor="let attribute of product.attributes">
+                  <td style="width: 80px">
+                    <b>{{ attribute.name }}</b>
+                  </td>
+                  <td>
+                      <span
+                        (click)="
+                          chooseAttribute(attribute.productAttributes, index)
+                        "
+                        *ngFor="
+                          let item of attribute.productAttributes;
+                          index as index
+                        "
+                        class="attribute {{ item.checked ? 'active' : '' }}"
+                      >
+                        {{ item.value }}
+                      </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Số lượng</b>
+                  </td>
+                  <td>
+                    <nz-input-number
+                      [(ngModel)]="qty"
+                      [nzMax]="product.qty"
+                      [nzMin]="1"
+                      [nzStep]="1"
+                    >
+                    </nz-input-number>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Kho</b>
+                  </td>
+                  <td>
+                    <span>{{ product.qty | number }}</span>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>NCC</b>
+                  </td>
+                  <td>
+                    <span>{{ product.providerName }}</span>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div>
+            <a (click)="addToCart()" class="product-detail-add-cart">
+              <i nz-icon nzTheme="outline" nzType="shopping-cart"></i>
+              Thêm vào giỏ
+            </a>
+            <a (click)="buyNow()" class="product-detail-buy">Mua ngay</a>
+          </div>
+        </div>
+      </div>
+      <div class="box-product-detail-comment" nz-col nzMd="24" nzSm="24">
+        <div>
+          <nz-tabset>
+            <nz-tab nzTitle="CHI TIẾT SẢN PHẨM">
+              <div [innerHTML]="product.description"></div>
+            </nz-tab>
+            <nz-tab nzTitle="ĐÁNH GIÁ">
+              <div *ngFor="let review of product.reviews" class="box-comment">
+                <div class="box-comment-rate">
+                  <nz-rate [ngModel]="review.star" nzDisabled></nz-rate>
+                  <span>
+                    <small>{{
+                        review.created | date : "HH:mm dd-MM-yyyy"
+                      }}</small>
+                    -
+                    <span>{{ review.createdBy }}</span>
+                  </span>
+                </div>
+                <div class="box-comment-context">
+                  {{ review.content }}
+                </div>
+              </div>
+            </nz-tab>
+          </nz-tabset>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box-product-related">
+    <h3 class="title-border-right">SẢN PHẨM LIÊN QUAN</h3>
+    <div nz-row>
+      <div
+        *ngFor="let productRelated of product.productRelateds"
+        nz-col
+        nzSpan="4-8"
+      >
+        <app-product-template
+          (afterUpdateWishlist)="getData()"
+          [product]="productRelated.product"
+        ></app-product-template>
+      </div>
+    </div>
+  </div>
+</div>
