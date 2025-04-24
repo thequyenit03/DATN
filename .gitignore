@@ -1,0 +1,42 @@
+# Loại trừ các file và thư mục của Visual Studio/IDE
+.vs/
+*.suo
+*.vscode/
+*.idea/
+
+# Loại trừ các file xây dựng tạm thời của ASP.Net Core
+bin/
+obj/
+GeneratedMSBuildEditorConfig.editorconfig
+
+# Loại trừ các file log
+*.log
+
+# Loại trừ các file cache và metadata của NuGet
+*.nuget.cache
+project.nuget.cache
+*.cache
+
+# Loại trừ các file tạm thời của Angular
+node_modules/
+dist/
+tmp/
+
+# Loại trừ các file hệ thống
+Thumbs.db
+Desktop.ini
+
+# Loại trừ các file tạm thời liên quan đến dịch vụ Sourcelink
+*.sourcelink.json
+
+# Loại trừ các file lock của package manager (tuỳ chọn)
+yarn.lock
+package-lock.json
+
+# Loại trừ các file tạm thời khác
+*.dll
+*.exe
+*.pdb
+apphost.exe
+*.csproj.FileListAbsolute.txt
+*.genruntimeconfig.cache
