@@ -118,7 +118,9 @@ export class CartComponent implements OnInit {
         }
       })
   }
-
+  parseNumber(value: string): number {
+    return parseFloat(value.replace(/[^0-9]/g, '')) || 0;
+  }
   navigate(path: string): void {
     this.ngZone.run(() => this.router.navigateByUrl(path)).then();
   }

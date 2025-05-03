@@ -56,11 +56,11 @@
                       {{ product.productDiscountPrice | number }} ₫
                     </b>
                   </td>
-                  <td>
-                    <nz-input-number (ngModelChange)="product.qty = $event;updateCart()"
-                                     [ngModel]="product.qty" [nzMin]="0" [nzStep]="1" nzSize="small">
-                    </nz-input-number>
-                  </td>
+                  <nz-input-number (ngModelChange)="product.qty = $event;updateCart()"
+                 [ngModel]="product.qty" [nzMin]="0" [nzStep]="1" nzSize="small"
+                 [nzParser]="parseNumber">
+                  </nz-input-number>
+
                   <td class="text-right">
                     <b>
                       {{ (product.productDiscountPrice * product.qty) | number }} ₫
