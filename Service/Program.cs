@@ -45,6 +45,7 @@ builder.Services.AddScoped<ReportService>();
 builder.Services.AddScoped<ReviewService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<WebsiteService>();
+builder.Services.AddScoped<PaymentService>();
 
 var app = builder.Build();
 

@@ -30,7 +30,7 @@ namespace Service.Service
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Website> Websites { get; set; }
-
+        public virtual DbSet<PaymentConfig> PaymentConfigs { get; set; }
         public MyContext(DbContextOptions<MyContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
