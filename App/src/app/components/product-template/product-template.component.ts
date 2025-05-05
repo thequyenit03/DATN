@@ -29,6 +29,12 @@ export class ProductTemplateComponent implements OnInit {
   }
 
   addToCart() {
+
+    if(this.product.qty === 0){
+      this.messageService.error(`Sản phẩm ${this.product.name} hiện đã hết hàng. Số lượng còn trong kho ${this.product.qty}`);
+      return;
+    }
+
     if (this.product.attributes) {
       this.product.attributes.forEach(x => {
         if (x.productAttributes.length > 0)
