@@ -92,6 +92,11 @@ export class ProductDetailComponent implements OnInit {
   }
 
   buyNow() {
+    if (this.product.qty < this.qty) {
+      this.messageService.error("Số lượng vượt quá lượng trong kho sản phẩm")
+      return;
+    }
+
     if (this.product.attributes && this.product.attributes.length > 0) {
       if (!(this.product.attributes.findIndex(x => x.productAttributes.findIndex(y => y.checked) >= 0) >= 0)) {
         this.messageService.error("Chọn ít nhất một thuộc tính sản phẩm")

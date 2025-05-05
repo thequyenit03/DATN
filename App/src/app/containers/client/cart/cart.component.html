@@ -46,22 +46,23 @@
                     <img [src]="product.productImage | fullPathResource"
                          style="width: 50px;border: 1px solid #dcdcdc;padding: 1px;min-width: 50px;" alt=""/>
                   </td>
-                  <td>
+                  <td class="text-center">
                     <a class="text-black" routerLink="/san-pham/{{product.productAlias}}">
                       {{ product.productName }}
                     </a>
                   </td>
-                  <td class="text-right">
+                  <td class="text-center">
                     <b>
                       {{ product.productDiscountPrice | number }} ₫
                     </b>
                   </td>
+                  <td class="text-center">
                   <nz-input-number (ngModelChange)="product.qty = $event;updateCart()"
-                 [ngModel]="product.qty" [nzMin]="0" [nzStep]="1" nzSize="small"
+                 [ngModel]="product.qty" [nzMin]="0" [nzStep]="1" nzSize="large"
                  [nzParser]="parseNumber">
                   </nz-input-number>
-
-                  <td class="text-right">
+                </td>
+                  <td class="text-center">
                     <b>
                       {{ (product.productDiscountPrice * product.qty) | number }} ₫
                     </b>
@@ -95,7 +96,7 @@
                 <td class="text-right" colspan="4">
                   <h4>Tổng tiền</h4>
                 </td>
-                <td class="text-right">
+                <td class="text-center">
                   <h4 style="color:red">
                     {{ getTotalAmount | number }} ₫
                   </h4>
