@@ -57,7 +57,7 @@
                     </b>
                   </td>
                   <nz-input-number (ngModelChange)="product.qty = $event;updateCart()"
-                 [ngModel]="product.qty" [nzMin]="0" [nzStep]="1"  nzSize="small"
+                 [ngModel]="product.qty" [nzMin]="0" [nzStep]="1" nzSize="small"
                  [nzParser]="parseNumber">
                   </nz-input-number>
 
@@ -161,7 +161,7 @@
                     </button>
                   </td>
                   <td nzAlign="center" colspan="2">
-                    <button [nzLoading]="nzLoading" nz-button nzType="primary" (click)="createPaymentLink()">Thanh toán
+                    <button type="button" [nzLoading]="nzLoading" nz-button nzType="primary" (click)="createPaymentLink()">Thanh toán
                     </button>                    
                   </td>
                 </tr>

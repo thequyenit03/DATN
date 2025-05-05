@@ -13,7 +13,6 @@ import { ProductAttribute } from '../../../core/model/product-attribute';
 import { DataHelper } from '../../../core/util/data-helper';
 import { ShareModule } from '../../../share.module';
 import { PaymentService } from '../../../core/service/payment.service';
-import { Product } from '../../../core/model/product';
 
 @Component({
   selector: 'app-cart',
@@ -29,7 +28,6 @@ export class CartComponent implements OnInit {
   paymentMessage: string = '';
   isProcessingPayment: boolean = false;
   isProfileLoaded: boolean = false; // Cờ để đánh dấu khi profile đã được load
-  product!: Product;  
 
   constructor(
     public service: CartService,
@@ -126,10 +124,8 @@ export class CartComponent implements OnInit {
 
   updateCart() {
     this.orderDetail = this.orderDetail.filter(x => x.qty > 0);
-    this.service.updateCart(this.orderDetail);    
+    this.service.updateCart(this.orderDetail);
   }
-
-  
 
   chooseAttribute(attributes: ProductAttribute[], index: number) {
     for (let i = 0; i < attributes.length; i++) {
@@ -203,7 +199,7 @@ export class CartComponent implements OnInit {
           window.location.href = paymentUrl;
         },
         error: (err) => {
-          this.messageService.error("Lỗi tạo link thanh toán, vui lòng thử lại!");
+          this.messageService.error("Lỗi tạo link thanh toán", err);
         }
       });
   }
