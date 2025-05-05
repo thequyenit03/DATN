@@ -33,22 +33,30 @@ namespace Service.Controllers
 
         }
 
-        [HttpGet("payment")]
-        public IActionResult GetPaymentLink()
+        [HttpPost("api/payment")]
+        public IActionResult GetPaymentLink([FromBody] PaymentRequest request)
         {
-            string link = paymentService.CreatePaymentLink(new Order()
+            if (request == null || request.totalAmount <= 0)
             {
-                
+                return BadRequest("Invalid amount");
+            }
+            string link = paymentService.CreatePaymentLink(new Order()
+            {                
                 Created = DateTime.Now,
-                TotalAmount = 100000
+                TotalAmount = (double?)request.totalAmount
             });
             return Ok(link);
         }
-        [HttpGet("payment-return")]
-        public IActionResult GetPaymentReturn([FromQuery]Dictionary<string, string> query)
-        {            
+        [HttpGet("api/payment-return")]
+        public IActionResult GetPaymentReturn([FromQuery] Dictionary<string, string> query)
+        {
             string result = paymentService.VerifyPayment(query);
-            return Ok(result);
+            // Trả về kết quả ở dạng JSON cho phía frontend nhận và xử lý
+            return Ok(new { status = result });
+        }
+        public class PaymentRequest
+        {
+            public decimal totalAmount { get; set; }
         }
     }
 }

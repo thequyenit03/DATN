@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="box-breadcrumb">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>
+          <a routerLink="/">Trang chủ</a>
+        </nz-breadcrumb-item>
+        <nz-breadcrumb-item>
+          Giỏ hàng
+        </nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </div>
+    <div style="min-height: 250px;max-width: 600px;margin: 0 auto;">
+      <nz-result nzStatus="error" nzSubTitle="Xảy ra lỗi trong quá trình thanh toán.
+              Quý khách vui lòng kiểm tra và thanh toán lại. Xin chân thành cảm ơn quý khách!"
+                 nzTitle="Đặt hàng thất bại">
+        <div nz-result-extra>
+          <a nz-button nzType="primary" routerLink="/">Quay lại trang chủ</a>
+        </div>
+      </nz-result>
+    </div>
+  </div>
+  

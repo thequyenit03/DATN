@@ -61,10 +61,26 @@ export class OrderTemplateComponent implements OnInit {
   }
 
   confirmReview() {
+    // Lấy giá trị đánh giá sao và nội dung đánh giá từ form
+    const star: number = this.reviewModel.star;
+    // Nếu this.reviewModel.content bị null hoặc undefined, tự gán là chuỗi mặc định " " (có thể thay đổi theo yêu cầu)
+    const content: string = this.reviewModel.content?.trim() ?? " ";
+
+    // Kiểm tra giá trị star phải nằm trong khoảng 1 đến 5
+    if (typeof star !== 'number' || star < 1 || star > 5) {
+      this.messageService.error("Vui lòng đánh giá từ 1 đến 5 sao.");
+      return;
+    }
+
+    // Kiểm tra nội dung đánh giá không được để trống sau khi loại bỏ khoảng trắng
+    if (content.length === 0) {
+      this.messageService.error("Nội dung đánh giá không được để trống.");
+      return;
+    }
     this.service.post({
       orderDetailId: this.orderDetailSelected.id,
-      star: this.reviewModel.star,
-      content: this.reviewModel.content
+      star: star,
+      content: content
     } as Review)
       .subscribe({
         next: () => {

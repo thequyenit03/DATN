@@ -21,6 +21,7 @@ import {SearchComponent} from './search/search.component';
 import {CategoryComponent} from './category/category.component';
 import {HomeComponent} from './home/home.component';
 import {AuthGuardService} from '../../auth/auth-guard.service';
+import { OrderFailedComponent } from './order-failed/order-failed.component';
 
 
 registerLocaleData(en);
@@ -65,6 +66,11 @@ const routes: Routes = [
         path: "dat-hang-thanh-cong",
         canActivate: [AuthGuardService],
         component: OrderSuccessfulComponent
+      },
+      {
+        path: "dat-hang-that-bai",
+        canActivate: [AuthGuardService],
+        component: OrderFailedComponent
       },
       {
         path: "danh-muc-bai-viet/:alias",

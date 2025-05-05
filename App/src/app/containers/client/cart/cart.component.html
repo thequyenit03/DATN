@@ -57,7 +57,7 @@
                     </b>
                   </td>
                   <nz-input-number (ngModelChange)="product.qty = $event;updateCart()"
-                 [ngModel]="product.qty" [nzMin]="0" [nzStep]="1" nzSize="small"
+                 [ngModel]="product.qty" [nzMin]="0" [nzStep]="1"  nzSize="small"
                  [nzParser]="parseNumber">
                   </nz-input-number>
 
@@ -150,10 +150,19 @@
                   </td>
                 </tr>
                 <tr>
-                  <td nzAlign="center" colspan="2">
-                    <button [nzLoading]="nzLoading" nz-button nzType="primary" type="submit">Đặt
-                      hàng
+                  <td>
+                    <button
+                      style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;"
+                      [nzLoading]="nzLoading"
+                      nz-button
+                      nzType="primary"
+                      type="submit">
+                      Submit
                     </button>
+                  </td>
+                  <td nzAlign="center" colspan="2">
+                    <button [nzLoading]="nzLoading" nz-button nzType="primary" (click)="createPaymentLink()">Thanh toán
+                    </button>                    
                   </td>
                 </tr>
                 <tr>
@@ -162,10 +171,11 @@
                       thông
                       tin</i>
                   </td>
+                  
                 </tr>
                 </tbody>
-              </table>
-            </form>
+              </table>              
+            </form>            
           </div>
         </div>
       </div>

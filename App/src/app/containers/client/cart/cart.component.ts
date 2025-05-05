@@ -1,16 +1,19 @@
-import {Component, NgZone, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
-import {NzMessageService} from 'ng-zorro-antd/message';
-import {finalize} from 'rxjs/operators';
-import {FormHelper} from '../../../core/util/form-helper';
-import {OrderDetail} from '../../../core/model/order-detail';
-import {OrderService} from '../../../core/service/order.service';
-import {CustomerService} from '../../../core/service/customer.service';
-import {CartService} from '../../../core/service/cart.service';
-import {ProductAttribute} from '../../../core/model/product-attribute';
-import {DataHelper} from '../../../core/util/data-helper';
-import {ShareModule} from '../../../share.module';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { finalize } from 'rxjs/operators';
+import { forkJoin } from 'rxjs';  // Import forkJoin để gộp các Observable
+import { FormHelper } from '../../../core/util/form-helper';
+import { OrderDetail } from '../../../core/model/order-detail';
+import { OrderService } from '../../../core/service/order.service';
+import { CustomerService } from '../../../core/service/customer.service';
+import { CartService } from '../../../core/service/cart.service';
+import { ProductAttribute } from '../../../core/model/product-attribute';
+import { DataHelper } from '../../../core/util/data-helper';
+import { ShareModule } from '../../../share.module';
+import { PaymentService } from '../../../core/service/payment.service';
+import { Product } from '../../../core/model/product';
 
 @Component({
   selector: 'app-cart',
@@ -22,6 +25,11 @@ export class CartComponent implements OnInit {
   formData!: FormGroup;
   orderDetail: OrderDetail[] = [];
   nzLoading: boolean = false;
+  paymentStatus: string = '';
+  paymentMessage: string = '';
+  isProcessingPayment: boolean = false;
+  isProfileLoaded: boolean = false; // Cờ để đánh dấu khi profile đã được load
+  product!: Product;  
 
   constructor(
     public service: CartService,
@@ -30,36 +38,86 @@ export class CartComponent implements OnInit {
     public messageService: NzMessageService,
     public formBuilder: FormBuilder,
     public ngZone: NgZone,
-    public router: Router
-  ) {
-  }
+    public router: Router,
+    private paymentService: PaymentService,
+    private active: ActivatedRoute
+  ) {}
 
   get getTotalAmount(): number {
     let total: number = 0;
     this.orderDetail.forEach(x => {
       total += x.qty * x.productDiscountPrice;
-    })
-   
+    });
     return total;
   }
 
   ngOnInit() {
+    // Khởi tạo form với các trường cần thiết
     this.formData = this.formBuilder.group({
-      fullName: [{value: '', disabled: true}, Validators.required],
+      fullName: [{ value: '', disabled: true }, Validators.required],
       phoneNumber: [null, Validators.required],
       address: [null, Validators.required],
       note: [null],
       code: [null],
     });
+    // Lấy giỏ hàng
     this.getCart();
-    this.getProfile();
+
+    // Đăng ký lắng nghe queryParams để kiểm tra xem có tham số thanh toán hay không
+    this.active.queryParams.subscribe(params => {
+      if (params['vnp_TxnRef']) {
+        // Nếu có tham số thanh toán, chúng ta sử dụng forkJoin để load profile và xác thực thanh toán cùng lúc
+        this.isProcessingPayment = true;
+        forkJoin({
+          profile: this.customerService.getProfile(),
+          paymentResult: this.paymentService.verifyPayment(params)
+        }).subscribe({
+          next: ({ profile, paymentResult }) => {
+            // Patch dữ liệu profile vào form và đánh dấu đã load xong
+            this.formData.patchValue(profile);
+            this.isProfileLoaded = true;
+
+            // Xử lý kết quả trả về từ verifyPayment
+            let parsedResult;
+            try {
+              parsedResult = typeof paymentResult === 'string'
+                ? JSON.parse(paymentResult)
+                : paymentResult;
+            } catch (error) {
+              parsedResult = paymentResult;
+            }
+
+            this.paymentStatus = parsedResult.status;
+            this.paymentMessage = parsedResult.status === "1" ? "Thanh toán thành công!" : "Thanh toán thất bại!";
+            this.isProcessingPayment = false;
+
+            if (parsedResult.status === "1") {
+              // Nếu thanh toán thành công, gọi submitForm để đặt hàng
+              this.submitForm();
+            } else {
+              this.router.navigate(["/dat-hang-that-bai"]);
+            }
+          },
+          error: (err) => {
+            console.error("ForkJoin error:", err);
+            this.paymentStatus = "2";
+            this.paymentMessage = "Thanh toán thất bại!";
+            this.isProcessingPayment = false;
+            this.router.navigate(["/dat-hang-that-bai"]);
+          }
+        });
+      } else {
+        // Nếu không có tham số thanh toán, chỉ load profile
+        this.getProfile();
+      }
+    });
   }
 
   getProfile() {
-    this.customerService.getProfile()
-      .subscribe((resp: any) => {
-        this.formData.patchValue(resp)
-      })
+    this.customerService.getProfile().subscribe((resp: any) => {
+      this.formData.patchValue(resp);
+      this.isProfileLoaded = true;
+    });
   }
 
   getCart() {
@@ -68,21 +126,24 @@ export class CartComponent implements OnInit {
 
   updateCart() {
     this.orderDetail = this.orderDetail.filter(x => x.qty > 0);
- 
-    this.service.updateCart(this.orderDetail);
+    this.service.updateCart(this.orderDetail);    
   }
+
+  
 
   chooseAttribute(attributes: ProductAttribute[], index: number) {
     for (let i = 0; i < attributes.length; i++) {
-      if (i == index) {
-        attributes[i].checked = !attributes[i].checked;
-      } else
-        attributes[i].checked = false;
+      attributes[i].checked = (i === index) ? !attributes[i].checked : false;
     }
   }
 
   submitForm(): void {
-    FormHelper.markAsDirty(this.formData)
+    // Đảm bảo rằng profile đã được load trước khi submit
+    if (!this.isProfileLoaded) {
+      console.warn("Profile data is not loaded yet.");
+      return;
+    }
+    FormHelper.markAsDirty(this.formData);
     if (this.formData.invalid) {
       return;
     }
@@ -93,7 +154,7 @@ export class CartComponent implements OnInit {
       if (x.attributes && x.attributes.length > 0) {
         x.attributes.forEach(y => {
           x.attribute += ('<b>' + y.name + "</b>: " + y.productAttributes.find(z => z.checked)?.value + "<br>");
-        })
+        });
       }
       x.attributes = [];
     });
@@ -103,25 +164,47 @@ export class CartComponent implements OnInit {
       customer: this.formData.getRawValue(),
       orderDetails: orderDetailPost
     })
-      .pipe(
-        finalize(() => {
-          this.nzLoading = false;
-        })
-      )
+      .pipe(finalize(() => {
+        this.nzLoading = false;
+      }))
       .subscribe({
         next: () => {
           this.service.clearCart();
-          this.navigate("/dat-hang-thanh-cong");
+          this.router.navigate(["/dat-hang-thanh-cong"]);
         },
         error: (error: any) => {
           this.messageService.error(error.error);
         }
-      })
+      });
   }
+
   parseNumber(value: string): number {
     return parseFloat(value.replace(/[^0-9]/g, '')) || 0;
   }
+
   navigate(path: string): void {
     this.ngZone.run(() => this.router.navigateByUrl(path)).then();
+  }
+
+  // Tạo link thanh toán
+  createPaymentLink() {    
+    // Đánh dấu tất cả các control trên form là dirty để hiển thị lỗi nếu có
+  FormHelper.markAsDirty(this.formData);
+  
+  // Kiểm tra tính hợp lệ của form
+  if (this.formData.invalid) {
+    this.messageService.error("Vui lòng điền đầy đủ thông tin yêu cầu!");
+    return;
+  }
+    const totalAmount = this.getTotalAmount;
+    this.paymentService.createPaymentLink(totalAmount)
+      .subscribe({
+        next: (paymentUrl) => {
+          window.location.href = paymentUrl;
+        },
+        error: (err) => {
+          this.messageService.error("Lỗi tạo link thanh toán, vui lòng thử lại!");
+        }
+      });
   }
 }

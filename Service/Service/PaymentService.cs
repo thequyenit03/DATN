@@ -15,7 +15,7 @@ namespace Service.Service
             long orderId = DateTime.Now.Ticks;
             PaymentConfig paymentConfig = context.PaymentConfigs.First(x => x.IsProduction == false);
             //Get Config Info
-            string vnp_Returnurl = "http://localhost:51255/payment-return";
+            string vnp_Returnurl = "http://localhost:4200/gio-hang";
             string vnp_Url = paymentConfig.Url;
             string vnp_TmnCode = paymentConfig.TerminalId;
             string vnp_HashSecret = paymentConfig.SecretKey;
@@ -38,30 +38,7 @@ namespace Service.Service
             vnpay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl);
             vnpay.AddRequestData("vnp_TxnRef", orderId.ToString()); // Mã tham chiếu của giao dịch tại hệ            
                                                                     //Add Params of 2.1.0 Version
-            vnpay.AddRequestData("vnp_ExpireDate", order.Created.AddMinutes(30).ToString("yyyyMMddHHmmss"));
-            //Billing
-            //vnpay.AddRequestData("vnp_Bill_Mobile", txt_billing_mobile.Text.Trim());
-            //vnpay.AddRequestData("vnp_Bill_Email", txt_billing_email.Text.Trim());
-            //var fullName = txt_billing_fullname.Text.Trim();
-            //if (!String.IsNullOrEmpty(fullName))
-            //{
-            //    var indexof = fullName.IndexOf(' ');
-            //    vnpay.AddRequestData("vnp_Bill_FirstName", fullName.Substring(0, indexof));
-            //    vnpay.AddRequestData("vnp_Bill_LastName", fullName.Substring(indexof + 1,
-            //    fullName.Length - indexof - 1));
-            //}
-            //vnpay.AddRequestData("vnp_Bill_Address", txt_inv_addr1.Text.Trim());
-            //vnpay.AddRequestData("vnp_Bill_City", txt_bill_city.Text.Trim());
-            //vnpay.AddRequestData("vnp_Bill_Country", txt_bill_country.Text.Trim());
-            //vnpay.AddRequestData("vnp_Bill_State", "");
-            //// Invoice
-            //vnpay.AddRequestData("vnp_Inv_Phone", txt_inv_mobile.Text.Trim());
-            //vnpay.AddRequestData("vnp_Inv_Email", txt_inv_email.Text.Trim());
-            //vnpay.AddRequestData("vnp_Inv_Customer", txt_inv_customer.Text.Trim());
-            //vnpay.AddRequestData("vnp_Inv_Address", txt_inv_addr1.Text.Trim());
-            //vnpay.AddRequestData("vnp_Inv_Company", txt_inv_company.Text);
-            //vnpay.AddRequestData("vnp_Inv_Taxcode", txt_inv_taxcode.Text);
-            //vnpay.AddRequestData("vnp_Inv_Type", cbo_inv_type.SelectedItem.Value);
+            vnpay.AddRequestData("vnp_ExpireDate", order.Created.AddMinutes(30).ToString("yyyyMMddHHmmss"));           
 
             string paymentUrl = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
             //log.InfoFormat("VNPAY URL: {0}", paymentUrl);
@@ -100,13 +77,13 @@ namespace Service.Service
                 if (vnp_ResponseCode == "00" && vnp_TransactionStatus == "00")
                 {
                     //Thanh toan thanh cong
-                    displayMsg = "Giao dịch được thực hiện thành công. Cảm ơn quý khách đã sử dụng dịch vụ";
+                    displayMsg = "1";
                     //log.InfoFormat("Thanh toan thanh cong, OrderId={0}, VNPAY TranId={1}", orderId, vnpayTranId);
                 }
                 else
                 {
                     //Thanh toan khong thanh cong. Ma loi: vnp_ResponseCode
-                    displayMsg = "Có lỗi xảy ra trong quá trình xử lý.Mã lỗi: " + vnp_ResponseCode;
+                    displayMsg = "2";
                     // log.InfoFormat("Thanh toan loi, OrderId={0}, VNPAY TranId={1},ResponseCode={2}", orderId, vnpayTranId, vnp_ResponseCode);
                 }
                 //displayTmnCode.InnerText = "Mã Website (Terminal ID):" + TerminalID;
@@ -118,7 +95,7 @@ namespace Service.Service
             else
             {
                 //log.InfoFormat("Invalid signature, InputData={0}", Request.RawUrl);
-                displayMsg = "Có lỗi xảy ra trong quá trình xử lý";
+                displayMsg = "2";
             }
             return displayMsg;
         }
