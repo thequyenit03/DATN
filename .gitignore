@@ -26,6 +26,11 @@ tmp/
 Thumbs.db
 Desktop.ini
 
+# Loại trừ các file hình ảnh khi cập nhật từ hệ thống
+*.png
+*.jpg
+*.jpeg
+*.gif
 # Loại trừ các file tạm thời liên quan đến dịch vụ Sourcelink
 *.sourcelink.json
 
