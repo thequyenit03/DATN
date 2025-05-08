@@ -38,7 +38,7 @@ namespace Service.Util
             SmtpClient client = new("smtp.gmail.com");
             MailMessage mail = new()
             {
-                From = new MailAddress(emailConfig.Email, "DEcommerce Notification"),
+                From = new MailAddress(emailConfig.Email, "HaiAnhMobile"),
                 Subject = subject,
                 IsBodyHtml = true
             };
