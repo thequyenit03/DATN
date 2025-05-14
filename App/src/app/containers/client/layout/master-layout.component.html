@@ -71,8 +71,10 @@
     <div class="footer-top">
       <div class="container">
         <div nz-row>
-          <div nz-col nzMd="8" nzSpan="8" nzXs="24">
+          <div nz-col nzMd="8" nzSpan="8" nzXs="24" class="fix-image">
+            <a routerLink="/">
             <img src="{{website.logo | fullPathResource}}" alt="" style="margin-bottom: 16px; max-width: 250px;">
+            </a>
             <div class="mg-t">
               <div [innerHTML]="website.location | safe: 'html'"></div>
             </div>

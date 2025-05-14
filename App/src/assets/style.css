@@ -643,8 +643,10 @@ table {
 /* auth */
 
 .body-auth {
-  background-image: url(/assets/imgs/bg-auth.jpg);
+  background-image: url(/assets/imgs/BackgroundAdmin.jfif);
   background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
   font-size: 14px;
   min-height: 100%;
   position: absolute;

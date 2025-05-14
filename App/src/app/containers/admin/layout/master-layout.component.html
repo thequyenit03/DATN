@@ -1,8 +1,8 @@
 <nz-layout>
   <nz-sider [(nzCollapsed)]="isCollapsed" [nzTrigger]="null" nzCollapsible>
     <div class="logo">
-      <img *ngIf="!isCollapsed" alt="" style="height: 100%;" src="./assets/imgs/logo.png">
-      <img *ngIf="isCollapsed" alt="" style="height: 100%;" src="./assets/imgs/favicon_white.png">
+      <img *ngIf="!isCollapsed" alt="" style="height: 70px; width: 140px; padding-left: 30px" src="./assets/imgs/Logo1.png">
+      <img *ngIf="isCollapsed" alt="" style="height: 100%;" src="./assets/imgs/Logo2.png">
     </div>
     <ul class="menu-left" nz-menu nzMode="inline" nzTheme="dark">
       <li (click)="navigate('/admin')" nz-menu-item>

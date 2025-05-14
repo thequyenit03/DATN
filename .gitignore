@@ -31,6 +31,7 @@ Desktop.ini
 *.jpg
 *.jpeg
 *.gif
+*.jfif
 # Loại trừ các file tạm thời liên quan đến dịch vụ Sourcelink
 *.sourcelink.json
 
