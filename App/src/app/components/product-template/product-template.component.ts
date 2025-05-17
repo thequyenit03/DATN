@@ -47,8 +47,8 @@ export class ProductTemplateComponent implements OnInit {
 
   toggleWishlist() {
     if (this.product.isWishlist) {
-      this.removeWishListProduct()
-      this.product.isWishlist = false;
+      this.removeWishListProduct()      
+      
     } else {
       this.addWishListProduct();
       this.product.isWishlist = true;
@@ -68,6 +68,7 @@ export class ProductTemplateComponent implements OnInit {
           this.getWishlist();
           if (this.afterUpdateWishlist) {
             this.afterUpdateWishlist.emit();
+            this.messageService.success(`Đã thêm ${this.product.name} vào danh sách yêu thích`)
           }
         },
         error: (error: any) => {
@@ -83,6 +84,8 @@ export class ProductTemplateComponent implements OnInit {
           this.getWishlist();
           if (this.afterUpdateWishlist) {
             this.afterUpdateWishlist.emit();
+            this.messageService.error(`Đã xóa ${this.product.name} khỏi danh sách yêu thích`)
+            
           }
         },
         error: (error: any) => {
