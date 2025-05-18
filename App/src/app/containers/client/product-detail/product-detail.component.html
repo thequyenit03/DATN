@@ -157,10 +157,10 @@
         nz-col
         nzSpan="4-8"
       >
-        <app-product-template
-          (afterUpdateWishlist)="getData()"
-          [product]="productRelated.product"
-        ></app-product-template>
+      <app-product-template
+        (afterUpdateWishlist)="updateLocalWishlist($event)"
+        [product]="productRelated.product"
+      ></app-product-template>
       </div>
     </div>
   </div>

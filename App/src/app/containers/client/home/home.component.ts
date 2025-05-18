@@ -65,7 +65,25 @@ export class HomeComponent implements OnInit {
         this.productSellings = resp;
       })
   }
+  updateLocalWishlist(updated: Product) {
+  // 1. Cập nhật productSellings
+  this.productSellings = this.productSellings.map(p =>
+    p.id === updated.id ? { ...p, isWishlist: updated.isWishlist } : p
+  );
 
+  // 2. Cập nhật menuHomePages
+  this.menuHomePages = this.menuHomePages.map(menu => ({
+    ...menu,
+    products: menu.products.map(p =>
+      p.id === updated.id ? { ...p, isWishlist: updated.isWishlist } : p
+    )
+  }));
+}
+onWishlistToggled() {
+  // Nếu muốn refresh cả hai:
+  this.getProductSelling();
+  this.getAllMenuHomePage();
+}
   getAllMenuHomePage() {
     this.menuService.getAllMenuHomePage()
       .subscribe((resp: any) => {

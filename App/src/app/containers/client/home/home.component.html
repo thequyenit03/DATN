@@ -44,9 +44,9 @@
       <div nz-row>
         <div *ngFor="let product of menu.products" nz-col nzSpan="4-8">
           <app-product-template
-            (afterUpdateWishlist)="getProductSelling()"
-            [product]="product"
-          ></app-product-template>
+          (afterUpdateWishlist)="updateLocalWishlist($event)"
+          [product]="product">
+        </app-product-template>
         </div>
       </div>
     </div>

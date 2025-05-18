@@ -7,6 +7,7 @@ import {CartService} from '../../../core/service/cart.service';
 import {ProductAttribute} from '../../../core/model/product-attribute';
 import {ShareModule} from '../../../share.module';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { CustomerService } from '../../../core/service/customer.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -19,6 +20,7 @@ export class ProductDetailComponent implements OnInit {
   product!: Product;
   qty: number = 1;
   image: string = "./assets/imgs/tivi.png";
+  wishlistIds = new Set<number>();
 
   customOptions: OwlOptions = {
     loop: false,
@@ -38,7 +40,8 @@ export class ProductDetailComponent implements OnInit {
     public cartService: CartService,
     public messageService: NzMessageService,
     public ngZone: NgZone,
-    public router: Router
+    public router: Router,
+    public customerService: CustomerService
   ) {
     this.router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
@@ -51,7 +54,36 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit() {
    
     this.productAlias = this.activatedRoute.snapshot.params['alias'];
+    this.loadWishlistIds();
     this.getData();
+  }
+  private loadWishlistIds() {
+    this.customerService.getWishlistProductIds()
+      .subscribe(ids => {
+        this.wishlistIds = new Set(ids);
+      });
+  }
+
+   updateLocalWishlist(toggled: Product) {
+    // Cập nhật set của chúng ta
+    if (toggled.isWishlist) {
+      this.wishlistIds.add(toggled.id);
+    } else {
+      this.wishlistIds.delete(toggled.id);
+    }
+
+    // Cập nhật lại flag trên product.detail
+    if (this.product.id === toggled.id) {
+      this.product.isWishlist = toggled.isWishlist;
+    }
+
+    // Cập nhật trên danh sách related
+    this.product.productRelateds = this.product.productRelateds.map(rel => ({
+      ...rel,
+      product: rel.product.id === toggled.id
+        ? { ...rel.product, isWishlist: toggled.isWishlist }
+        : rel.product
+    }));
   }
 
   getData() {

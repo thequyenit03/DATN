@@ -5,6 +5,8 @@ import {User} from '../model/user';
 import {environment} from '../../../environments/environment.development';
 import {map} from 'rxjs/operators';
 import {Constants} from '../util/constants';
+import { Observable } from 'rxjs';
+import { Product } from '../model/product';
 
 @Injectable({
   providedIn: 'root'
@@ -88,7 +90,7 @@ export class CustomerService extends BaseService {
   }
 
   getWishListProduct(orderBy: string, price: string, take: number) {
-    return this.http.get(this.routerPrefix + "/get-wishlist-product", {
+    return this.http.get<Product[]>(this.routerPrefix + "/get-wishlist-product", {
       params: {
         orderBy,
         price,
@@ -96,7 +98,14 @@ export class CustomerService extends BaseService {
       }
     });
   }
-
+  /** Trả về mảng ID của sản phẩm trong wishlist */
+  getWishlistProductIds(): Observable<number[]> {
+    // orderBy, price, take tùy vào API của bạn; nếu không cần filter thì truyền chuỗi rỗng và take = 0
+    return this.getWishListProduct('', '', 0)
+      .pipe(
+        map((prods: Product[]) => prods.map(p => p.id))
+      );
+  }
   getTotalItemWishlist() {
     return this.http.get(this.routerPrefix + "/get-total-wishlist");
   }

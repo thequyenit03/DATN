@@ -65,11 +65,10 @@ export class ProductTemplateComponent implements OnInit {
     this.customerService.addWishListProduct(this.product.id)
       .subscribe({
         next: () => {
-          this.getWishlist();
-          if (this.afterUpdateWishlist) {
-            this.afterUpdateWishlist.emit();
-            this.messageService.success(`Đã thêm ${this.product.name} vào danh sách yêu thích`)
-          }
+         this.product.isWishlist = true;            
+        this.afterUpdateWishlist.emit(this.product);  
+        this.messageService.success(`Đã thêm ${this.product.name} vào danh sách yêu thích`);
+        this.getWishlist();
         },
         error: (error: any) => {
           this.messageService.error(error.error);
@@ -81,12 +80,10 @@ export class ProductTemplateComponent implements OnInit {
     this.customerService.removeWishListProduct(this.product.id)
       .subscribe({
         next: () => {
+           this.product.isWishlist = false;                 // ① set flag
+          this.afterUpdateWishlist.emit(this.product);     // ② emit payload
+          this.messageService.error(`Đã xóa ${this.product.name} khỏi danh sách yêu thích`);
           this.getWishlist();
-          if (this.afterUpdateWishlist) {
-            this.afterUpdateWishlist.emit();
-            this.messageService.error(`Đã xóa ${this.product.name} khỏi danh sách yêu thích`)
-            
-          }
         },
         error: (error: any) => {
           this.messageService.error(error.error);
