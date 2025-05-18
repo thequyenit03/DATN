@@ -9,23 +9,30 @@
         <i nz-icon nzType="dashboard"></i>
         <span> Tổng quan </span>
       </li>
-      <li nz-submenu nzIcon="shopping-cart" nzOpen nzTitle="Đơn hàng">
-        <ul>
-          <li (click)="navigate('/admin/don-hang/don-hang-can-xu-ly')" nz-menu-item>Đơn hàng cần xử lý
-          </li>
-          <li (click)="navigate('/admin/don-hang')" nz-menu-item>Danh sách đơn hàng</li>
-        </ul>
-      </li>
+     <nz-badge [nzCount]="filterOrderByStatus(10).length">
+        <li nz-submenu nzIcon="shopping-cart" nzOpen nzTitle="Đơn hàng">
+          <ul>
+            <li (click)="navigate('/admin/don-hang/don-hang-can-xu-ly')" nz-menu-item>
+              Đơn hàng cần xử lý
+            </li>
+            <li (click)="navigate('/admin/don-hang')" nz-menu-item>
+              Danh sách đơn hàng
+            </li>
+          </ul>
+        </li>
+      </nz-badge>
       <li nz-submenu nzIcon="appstore" nzOpen nzTitle="Sản phẩm">
         <ul>
           <li (click)="navigate('/admin/san-pham')" nz-menu-item>Danh sách sản phẩm</li>
           <li (click)="navigate('/admin/thuoc-tinh-san-pham')" nz-menu-item>Thuộc tính sản phẩm</li>
         </ul>
       </li>
+      <nz-badge [nzCount]="filterReviewByStatus(10).length" class="li-danh-gia">
       <li (click)="navigate('/admin/danh-gia')" nz-menu-item>
         <i nz-icon nzType="form"></i>
         <span> Đánh giá sản phẩm</span>
       </li>
+      </nz-badge>
       <li (click)="navigate('/admin/khach-hang')" nz-menu-item>
         <i nz-icon nzType="user"></i>
         <span> Khách hàng</span>

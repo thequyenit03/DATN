@@ -78,3 +78,16 @@ nz-content::-webkit-scrollbar-thumb {
   background: #cccccc;
   border-radius: 5px;
 }
+nz-badge {
+  width: 200px;
+  color: white;
+}
+nz-badge li{
+  width: 220px;
+}
+.li-danh-gia{
+  width: 200px;
+}
+.li-danh-gia li{
+  width: 220px;
+}
