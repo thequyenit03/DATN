@@ -7,44 +7,78 @@ import {Constants} from '../util/constants';
   providedIn: 'root'
 })
 export class CartService {
-  getCart(): OrderDetail[] {
-    let cartJson = localStorage.getItem(Constants.LOCAL_STORAGE_KEY.CART);
-    if (cartJson == null || cartJson == "")
+  private readonly CART_KEY = Constants.LOCAL_STORAGE_KEY.CART;
+  private readonly CART_TEMP_KEY = `${Constants.LOCAL_STORAGE_KEY.CART}_TEMP`;
+ getCart(): OrderDetail[] {
+    const json = localStorage.getItem(this.CART_KEY);
+    if (!json) return [];
+    try {
+      return JSON.parse(json) as OrderDetail[];
+    } catch (e) {
+      console.warn('CartService.getCart(): parse error', e);
       return [];
-    return JSON.parse(cartJson);
+    }
   }
 
-  addProductToCart(product: Product, qty: number = 1) {
-    let cart: OrderDetail[] = [];
-    let cartJson = localStorage.getItem(Constants.LOCAL_STORAGE_KEY.CART);
-    if (cartJson)
-      cart = JSON.parse(cartJson);
-
-    let pExist = cart.find(x => x.productId == product.id);
-    if (pExist) {
-      pExist.qty += qty;
+    addProductToCart(product: Product, qty: number = 1): void {
+    const cart = this.getCart();
+    const exist = cart.find(x => x.productId === product.id);
+    if (exist) {
+      exist.qty += qty;
     } else {
       cart.push({
         id: 0,
-        productDiscountPrice: product.discountPrice,
         productId: product.id,
-        productImage: product.image,
         productName: product.name,
         productAlias: product.alias,
+        productImage: product.image,
         productPrice: product.price,
-        qty: qty,
-        attributes: product.attributes
+        productDiscountPrice: product.discountPrice,
+        qty,
+        attributes: product.attributes || []
       } as OrderDetail);
     }
-
-    localStorage.setItem(Constants.LOCAL_STORAGE_KEY.CART, JSON.stringify(cart));
+    this.updateCart(cart);
   }
 
-  updateCart(cart: OrderDetail[]) {
-    localStorage.setItem(Constants.LOCAL_STORAGE_KEY.CART, JSON.stringify(cart));
+   updateCart(cart: OrderDetail[]): void {
+    try {
+      localStorage.setItem(this.CART_KEY, JSON.stringify(cart));
+    } catch (e) {
+      console.error('CartService.updateCart(): write error', e);
+    }
   }
 
-  clearCart() {
-    localStorage.removeItem(Constants.LOCAL_STORAGE_KEY.CART);
+    clearCart(): void {
+    localStorage.removeItem(this.CART_KEY);
   }
+   backupCart(): void {
+    const cart = this.getCart();
+    try {
+      localStorage.setItem(this.CART_TEMP_KEY, JSON.stringify(cart));
+    } catch (e) {
+      console.error('CartService.backupCart(): write temp error', e);
+    }
+  }
+  restoreCartFromBackup(): OrderDetail[] {
+    const json = localStorage.getItem(this.CART_TEMP_KEY);
+    if (!json) {
+      // không có backup, trả về giỏ hàng chính
+      return this.getCart();
+    }
+    let backup: OrderDetail[];
+    try {
+      backup = JSON.parse(json) as OrderDetail[];
+    } catch (e) {
+      console.warn('CartService.restoreCartFromBackup(): parse error', e);
+      return this.getCart();
+    }
+
+    // Ghi backup thành giỏ hàng chính
+    this.updateCart(backup);
+    // Xoá bản temp
+    localStorage.removeItem(this.CART_TEMP_KEY);
+    return backup;
+  }
+
 }
