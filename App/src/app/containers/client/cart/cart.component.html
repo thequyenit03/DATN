@@ -58,15 +58,28 @@
                   </td>
                   <td class="text-center">
                   <nz-input-number (ngModelChange)="product.qty = $event;updateCart()"
-                 [ngModel]="product.qty" [nzMin]="0" [nzStep]="1" nzSize="large"
+                 [ngModel]="product.qty" [nzMin]="1" [nzStep]="1" nzSize="large"
                  [nzParser]="parseNumber">
                   </nz-input-number>
-                </td>
+                  </td>
                   <td class="text-center">
                     <b>
                       {{ (product.productDiscountPrice * product.qty) | number }} ₫
                     </b>
                   </td>
+                  <td class="text-center">
+                  <i
+                    nz-button
+                    nz-popconfirm
+                    nzPopconfirmTitle="Xác nhận xóa?"
+                    nzPopconfirmPlacement="topRight"
+                    nzDanger
+                    nzSize="small"
+                    nzType="primary"
+                    class="fa-solid fa-trash"
+                    (nzOnConfirm)="deleteProduct(product.productName)"
+                  ></i>
+                </td>
                 </tr>
                 <tr *ngIf="product.attributes && product.attributes.length > 0">
                   <td colSpan="4">

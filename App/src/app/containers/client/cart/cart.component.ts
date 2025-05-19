@@ -228,4 +228,16 @@ export class CartComponent implements OnInit {
         }
       });
   }
+deleteProduct(productName: string): void {       
+    // Lọc bỏ các mục có tên sản phẩm trùng với productName được truyền vào
+    this.orderDetail = this.orderDetail.filter(
+      item => item.productName !== productName
+    );
+    // Cập nhật lại giỏ hàng qua service
+    this.service.updateCart(this.orderDetail);
+    // Hiển thị thông báo thành công cho người dùng
+    this.messageService.success('Đã xóa sản phẩm khỏi giỏ hàng!');
+  }
+
+
 }
