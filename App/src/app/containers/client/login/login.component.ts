@@ -5,6 +5,7 @@ import {NzMessageService} from 'ng-zorro-antd/message';
 import {FormHelper} from '../../../core/util/form-helper';
 import {ShareModule} from '../../../share.module';
 import {CustomerService} from '../../../core/service/customer.service';
+import { CartService } from '../../../core/service/cart.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     public formBuilder: FormBuilder,
     public messageService: NzMessageService,
     public ngZone: NgZone,
-    public router: Router
+    public router: Router,
+    public cartService: CartService
   ) {
   }
 
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: () => {
           this.messageService.success("Đăng nhập thành công");
+          this.cartService.restoreCartFromBackup();
           this.navigate("/");
         },
         error: (error: any) => {
