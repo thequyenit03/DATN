@@ -12,10 +12,11 @@ import {MenuService} from '../../../core/service/menu.service';
 import {CartService} from '../../../core/service/cart.service';
 import {ShareModule} from '../../../share.module';
 import {SafePipe} from '../../../core/pipe/safe.pipe';
+import { ChatbotComponent } from '../chatbot/chatbot.component';
 
 @Component({
   selector: 'app-master-layout',
-  imports: [ShareModule, SafePipe],
+  imports: [ShareModule, SafePipe, ChatbotComponent],
   templateUrl: './master-layout.component.html',
   styleUrls: ['./master-layout.component.css']
 })

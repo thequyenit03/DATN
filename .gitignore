@@ -47,4 +47,6 @@ apphost.exe
 *.csproj.FileListAbsolute.txt
 *.genruntimeconfig.cache
 *.csproj.user
+# Loại trừ file key
+haianhmobile-2628a76c7e3a.json
 

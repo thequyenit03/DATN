@@ -1,0 +1,37 @@
+<button class="chat-toggle-btn" (click)="toggleChat()">
+  <span *ngIf="!isOpen">
+    <i class="fa-solid fa-message"></i>
+  </span>
+  <span *ngIf="isOpen">
+    <i class="fa-solid fa-circle-xmark"></i>
+  </span>
+</button>
+<div class="chatbot-container" *ngIf="isOpen">
+  <div class="chat-header">
+    Chat với chúng tôi    
+  </div>
+  <div class="chat-suggestions">
+    <button
+      *ngFor="let sug of suggestions"
+      class="suggestion-btn"
+      (click)="selectSuggestion(sug)"
+    >
+      {{ sug }}
+    </button>
+  </div>
+  <div class="chat-messages">
+  <div *ngFor="let m of messages" [ngClass]="m.from" class="message-container">
+    <div class="message-box" [ngClass]="m.from">
+      {{ m.text }}
+    </div>
+  </div>
+</div>
+  <div class="chat-input">
+    <input
+      type="text"
+      [(ngModel)]="inputText"
+      placeholder="Gõ tin nhắn..."
+    />
+    <button (click)="sendMessage()">Gửi</button>
+  </div>
+</div>
