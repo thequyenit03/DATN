@@ -35,7 +35,7 @@ export class ProfileComponent implements OnInit {
       code: [{value: '', disabled: true}, Validators.required],
       email: [{value: '', disabled: true}, Validators.required],
       fullName: [null, Validators.required],
-      phoneNumber: [null, Validators.required],
+      phoneNumber: [null, [Validators.required, Validators.pattern(/^\d{10,11}$/)]],
       address: [null, Validators.required],
       dob: [null],
       gender: [null],

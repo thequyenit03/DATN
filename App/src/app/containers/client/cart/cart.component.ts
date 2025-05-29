@@ -55,7 +55,7 @@ export class CartComponent implements OnInit {
     // Khởi tạo form với các trường cần thiết
     this.formData = this.formBuilder.group({
       fullName: [{ value: '', disabled: true }, Validators.required],
-      phoneNumber: [null, Validators.required],
+      phoneNumber: [null, [Validators.required, Validators.pattern(/^\d{10,11}$/)]],
       address: [null, Validators.required],
       note: [null],
       code: [null],

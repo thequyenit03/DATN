@@ -2,3 +2,7 @@
     color:crimson;
     cursor: pointer;
 }
+
+nz-form-control{
+    height: 50px;
+}
