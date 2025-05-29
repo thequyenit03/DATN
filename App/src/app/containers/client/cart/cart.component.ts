@@ -155,47 +155,49 @@ export class CartComponent implements OnInit {
     sessionStorage.removeItem(this.CUSTOMER_TEMP_KEY);
   }
   submitForm(): void {
-    // Đảm bảo rằng profile đã được load trước khi submit
-    if (!this.isProfileLoaded) {
-      console.warn("Profile data is not loaded yet.");
-      return;
-    }
-    FormHelper.markAsDirty(this.formData);
-    if (this.formData.invalid) {
-      return;
-    }
-
-    let orderDetailPost: OrderDetail[] = DataHelper.clone(this.orderDetail);
-    orderDetailPost.forEach(x => {
-      x.attribute = "";
-      if (x.attributes && x.attributes.length > 0) {
-        x.attributes.forEach(y => {
-          x.attribute += ('<b>' + y.name + "</b>: " + y.productAttributes.find(z => z.checked)?.value + "<br>");
-        });
-      }
-      x.attributes = [];
-    });
-
-    this.nzLoading = true;
-    console.log('PAYLOAD customer:', this.formData.getRawValue());
-    this.orderService.post({
-      customer: this.formData.getRawValue(),
-      orderDetails: orderDetailPost
-    })
-      .pipe(finalize(() => {
-        this.nzLoading = false;
-      }))
-      .subscribe({
-        next: () => {
-          this.service.clearCart();
-          sessionStorage.removeItem(this.CUSTOMER_TEMP_KEY);
-          this.router.navigate(["/dat-hang-thanh-cong"]);
-        },
-        error: (error: any) => {
-          this.messageService.error(error.error);
-        }
-      });
+  // Đảm bảo rằng profile đã được load trước khi submit
+  if (!this.isProfileLoaded) {
+    console.warn("Profile data is not loaded yet.");
+    return;
   }
+  FormHelper.markAsDirty(this.formData);
+  if (this.formData.invalid) {
+    return;
+  }
+
+  let orderDetailPost: OrderDetail[] = DataHelper.clone(this.orderDetail);
+  orderDetailPost.forEach(x => {
+    x.attribute = "";
+    if (x.attributes && x.attributes.length > 0) {
+      x.attributes.forEach(y => {
+        x.attribute += ('<b>' + y.name + "</b>: " + y.productAttributes.find(z => z.checked)?.value + "<br>");
+      });
+    }
+    x.attributes = [];
+  });
+
+  // Set nzLoading luôn thành true để hiển thị loading
+  this.nzLoading = true;
+  console.log('PAYLOAD customer:', this.formData.getRawValue());
+  this.orderService.post({
+    customer: this.formData.getRawValue(),
+    orderDetails: orderDetailPost
+  })
+    .pipe(finalize(() => {
+      // Khi nhận được phản hồi (thành công hoặc lỗi), tắt loading
+      this.nzLoading = false;
+    }))
+    .subscribe({
+      next: () => {
+        this.service.clearCart();
+        sessionStorage.removeItem(this.CUSTOMER_TEMP_KEY);
+        this.router.navigate(["/dat-hang-thanh-cong"]);
+      },
+      error: (error: any) => {
+        this.messageService.error(error.error);
+      }
+    });
+}
 
   parseNumber(value: string): number {
     return parseFloat(value.replace(/[^0-9]/g, '')) || 0;
