@@ -22,6 +22,7 @@ export class MasterLayoutComponent implements OnInit {
   formData!: FormGroup;
   orders: Order[] = [];
   datas: Review[] = [];
+  intervalid: any;
    filter = {
     keySearch: "",
     status: null,
@@ -43,6 +44,10 @@ export class MasterLayoutComponent implements OnInit {
   ngOnInit() {
     this.getDataOrder();
     this.getDataReview();
+    this.intervalid = setInterval(()=>{
+      this.getDataOrder();
+      this.getDataReview();      
+    }, 3000);
   }
    getDataOrder() {
       let fDate: string = "";
@@ -109,6 +114,12 @@ export class MasterLayoutComponent implements OnInit {
   }
   filterReviewByStatus(status: number): Review[]{
     return this.datas.filter(x => x.status == status);
+  }
+
+  ngDestroy() {
+    if (this.intervalid) {
+      clearInterval(this.intervalid);
+    }
   }
 
 }
