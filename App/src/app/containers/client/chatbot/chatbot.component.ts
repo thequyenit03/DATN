@@ -21,7 +21,7 @@ export class ChatbotComponent implements OnInit {
   suggestions: string[] = [
     'Chính sách bảo hành của cửa hàng ?',
     'Hướng dẫn thanh toán ?',
-    'Còn hàng Samsung Galaxy S21 không ?'
+    'Chính sách bảo mật ?'
   ];
 
   constructor(public service: ChatbotService) {}

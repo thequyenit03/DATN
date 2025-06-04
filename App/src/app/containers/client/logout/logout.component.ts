@@ -14,7 +14,7 @@ export class LogoutComponent implements OnInit {
   ) {}
   ngOnInit() {
      // 1. Backup giỏ hàng tạm thời
-    this.cartService.backupCart();
+    this.cartService.backupCart();    
     localStorage.removeItem(Constants.LOCAL_STORAGE_KEY.TOKEN);
     localStorage.removeItem(Constants.LOCAL_STORAGE_KEY.SESSION);
     location.href = '/dang-nhap';
